@@ -48,7 +48,7 @@ function renderCatCard(json) {
   const { url } = json[0];
   const { name, description, temperament } = breedInfo;
 
-  const cardMarkup = `
+  const markup = `
     <h2 class="header">${name}</h2>
     <div class="card">
       <img src="${url}" alt="Cat breed ${name}" class="image">
@@ -58,5 +58,5 @@ function renderCatCard(json) {
       </div>
     </div>`;
 
-  catInfo.innerHTML = cardMarkup;
+  catInfo.innerHTML = markup;
 }
