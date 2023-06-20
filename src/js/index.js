@@ -1,4 +1,3 @@
-
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
 
 const selectEl = document.querySelector('select.breed-select');
@@ -34,9 +33,9 @@ function showLoader() {
   catInfo.innerHTML = '';
 }
 
-function onSelectorInput(e) {
+function onSelectorInput(event) {
   showLoader();
-  const chosenBreed = e.currentTarget.value;
+  const chosenBreed = event.currentTarget.value;
   fetchCatByBreed(chosenBreed)
     .then(renderCatCard)
     .catch(showError)
