@@ -9,11 +9,11 @@ const catInfo = document.querySelector('div.cat-info');
 selectEl.addEventListener('input', onSelectorInput);
 
 fetchBreeds()
-  .then(renderBreedSelect)
+  .then(renderSelect)
   .catch(showError)
   .finally(hideLoader);
 
-function renderBreedSelect(json) {
+function renderSelect(json) {
   const optionsMarkup = json.map(breed => `<option value="${breed.id}">${breed.name}</option>`).join('');
   selectEl.innerHTML = optionsMarkup;
   selectEl.value = '';
