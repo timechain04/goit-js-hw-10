@@ -30,32 +30,41 @@ function showError() {
 function showLoader() {
   loadEl.classList.remove('hidden');
   errorEl.classList.add('hidden');
-  catInfo.innerHTML = '';
 }
+
 
 function onSelectorInput(event) {
-  showLoader();
   const chosenBreed = event.currentTarget.value;
-  fetchCatByBreed(chosenBreed)
-    .then(renderCatCard)
-    .catch(showError)
-    .finally(hideLoader);
+  showLoader();
+  try {
+    fetchCatByBreed(chosenBreed)
+      .then(renderCatCard)
+      .catch(showError);
+  } finally {
+    hideLoader();
+  }
 }
 
+
 function renderCatCard(json) {
-  const breedInfo = json[0].breeds[0];
-  const { url } = json[0];
-  const { name, description, temperament } = breedInfo;
+  const { name, description, temperament } = json[0].breeds[0];
+  const url = json[0].url;
+
+  const header = `<h2 class="header">${name}</h2>`;
+  const image = `<img src="${url}" alt="Cat breed ${name}" class="image">`;
+  const descriptionText = `<p class="text">${description}</p>`;
+  const temperamentText = `<p class="text"><b>Temperament:</b> ${temperament}</p>`;
 
   const markup = `
-    <h2 class="header">${name}</h2>
+    ${header}
     <div class="card">
-      <img src="${url}" alt="Cat breed ${name}" class="image">
+      ${image}
       <div class="description">
-        <p class="text">${description}</p>
-        <p class="text"><b>Temperament:</b> ${temperament}</p>
+        ${descriptionText}
+        ${temperamentText}
       </div>
     </div>`;
 
   catInfo.innerHTML = markup;
 }
+
