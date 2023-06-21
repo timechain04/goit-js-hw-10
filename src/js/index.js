@@ -1,5 +1,4 @@
 import { fetchBreeds, fetchCatByBreed } from "./cat-api";
-
 const selectEl = document.querySelector('select.breed-select');
 const errorEl = document.querySelector('p.error');
 const loadEl = document.querySelector('p.loader');
@@ -10,7 +9,7 @@ selectEl.addEventListener('input', onSelectorInput);
 fetchBreeds()
   .then(renderSelect)
   .catch(showError)
-  .finally(hideLoader);
+  .finally(hideLoad);
 
 function renderSelect(json) {
   const optionsMarkup = json.map(breed => `<option value="${breed.id}">${breed.name}</option>`).join('');
@@ -19,7 +18,7 @@ function renderSelect(json) {
   selectEl.classList.remove('hidden');
 }
 
-function hideLoader() {
+function hideLoad() {
   loadEl.classList.add('hidden');
 }
 
@@ -27,34 +26,30 @@ function showError() {
   errorEl.classList.remove('hidden');
 }
 
-function showLoader() {
+function showLoad() {
   loadEl.classList.remove('hidden');
   errorEl.classList.add('hidden');
 }
 
-
 function onSelectorInput(event) {
   const chosenBreed = event.currentTarget.value;
-  showLoader();
+  showLoad();
   try {
     fetchCatByBreed(chosenBreed)
       .then(renderCatCard)
       .catch(showError);
   } finally {
-    hideLoader();
+    hideLoad();
   }
 }
-
 
 function renderCatCard(json) {
   const { name, description, temperament } = json[0].breeds[0];
   const url = json[0].url;
-
   const header = `<h2 class="header">${name}</h2>`;
   const image = `<img src="${url}" alt="Cat breed ${name}" class="image">`;
   const descriptionText = `<p class="text">${description}</p>`;
   const temperamentText = `<p class="text"><b>Temperament:</b> ${temperament}</p>`;
-
   const markup = `
     ${header}
     <div class="card">
@@ -64,7 +59,6 @@ function renderCatCard(json) {
         ${temperamentText}
       </div>
     </div>`;
-
   catInfo.innerHTML = markup;
 }
 
