@@ -34,10 +34,7 @@ function showLoad() {
 function onSelectorInput(event) {
   showLoad();
   const chosenBreed = event.currentTarget.value;
-  fetchCatByBreed(chosenBreed)
-  .then(renderCatCard)
-  .catch(showError)
-  .finally(hideLoad)
+  fetchCatByBreed(chosenBreed).then(renderCatCard).catch(showError).finally(hideLoad)
 }
 
 function renderCatCard(json) {
@@ -46,10 +43,9 @@ function renderCatCard(json) {
       url: json[0].url,
       alt: breedInfo.name,
   }
-  
   const markup = 
   `
-  <h2 class="header">${breedInfo.name}</h2>
+  <h2 class="header">🐈${breedInfo.name}</h2>
   <div class="card">
   <img src="${img.url}" alt="Cat breed ${img.alt}" class="image">
   <div class="description">
