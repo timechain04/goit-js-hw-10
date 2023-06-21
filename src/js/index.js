@@ -32,33 +32,31 @@ function showLoad() {
 }
 
 function onSelectorInput(event) {
-  const chosenBreed = event.currentTarget.value;
   showLoad();
-  try {
-    fetchCatByBreed(chosenBreed)
-      .then(renderCatCard)
-      .catch(showError);
-  } finally {
-    hideLoad();
-  }
+  const chosenBreed = event.currentTarget.value;
+  fetchCatByBreed(chosenBreed)
+  .then(renderCatCard)
+  .catch(showError)
+  .finally(hideLoad)
 }
 
 function renderCatCard(json) {
-  const { name, description, temperament } = json[0].breeds[0];
-  const url = json[0].url;
-  const header = `<h2 class="header">${name}</h2>`;
-  const image = `<img src="${url}" alt="Cat breed ${name}" class="image">`;
-  const descriptionText = `<p class="text">${description}</p>`;
-  const temperamentText = `<p class="text"><b>Temperament:</b> ${temperament}</p>`;
-  const markup = `
-    ${header}
-    <div class="card">
-      ${image}
-      <div class="description">
-        ${descriptionText}
-        ${temperamentText}
-      </div>
-    </div>`;
+  const breedInfo = json[0].breeds[0];
+  const img = {
+      url: json[0].url,
+      alt: breedInfo.name,
+  }
+  
+  const markup = 
+  `
+  <h2 class="header">${breedInfo.name}</h2>
+  <div class="card">
+  <img src="${img.url}" alt="Cat breed ${img.alt}" class="image">
+  <div class="description">
+  <p class="text">${breedInfo.description}</p>
+  <p class="text"><b>Temperament:</b> ${breedInfo.temperament}</p>
+  </div>
+  </div>
+  `
   catInfo.innerHTML = markup;
 }
-
