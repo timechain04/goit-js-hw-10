@@ -6,13 +6,11 @@ const catInfo = document.querySelector('div.cat-info');
 
 selectEl.addEventListener('input', onSelectorInput);
 
-fetchBreeds()
-  .then(renderSelect)
-  .catch(showError)
-  .finally(hideLoad);
+fetchBreeds().then(renderSelect).catch(showError).finally(hideLoad);
 
 function renderSelect(json) {
-  const optionsMarkup = json.map(breed => `<option value="${breed.id}">${breed.name}</option>`).join('');
+  const optionsMarkup = json.map(breed =>
+ `<option value="${breed.id}">${breed.name}</option>`).join('');
   selectEl.innerHTML = optionsMarkup;
   selectEl.value = '';
   selectEl.classList.remove('hidden');
